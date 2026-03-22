@@ -80,18 +80,24 @@ router.get("/profile", protect, authorize("student"), async (req, res, next) => 
 // Update student profile
 router.put("/profile", protect, authorize("student"), async (req, res, next) => {
   try {
-    const { name, ...studentData } = req.body;
+    const { name, user, _id, __v, ...studentData } = req.body;
 
     // Update name in User model if provided
     if (name) {
       await User.findByIdAndUpdate(req.user._id, { name });
     }
 
+    // Remove any fields that shouldn't be in Student model
+    delete studentData.user;
+    delete studentData._id;
+    delete studentData.__v;
+    delete studentData.placedCompany;
+
     // Update rest in Student model
     const student = await Student.findOneAndUpdate(
       { user: req.user._id },
-      studentData,
-      { new: true, runValidators: true }
+      { $set: studentData },
+      { new: true, runValidators: false }
     ).populate("user", "name email avatar");
 
     successResponse(res, 200, "Profile updated", { student });
