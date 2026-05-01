@@ -1,144 +1,120 @@
-# 🎓 CareerSync — A Digital Platform For Campus Recruitment
+# CareerSync — A Digital Platform For Campus Recruitment
 
-![CareerSync Banner](https://img.shields.io/badge/CareerSync-Campus%20Recruitment-2563eb?style=for-the-badge&logo=graduation-cap)
-![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react)
-![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=node.js)
-![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47a248?style=for-the-badge&logo=mongodb)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-06b6d4?style=for-the-badge&logo=tailwindcss)
-
-> A full-stack web application that digitizes and streamlines the entire campus placement process for students, companies, and Training & Placement Officers (TPO).
+CareerSync is a full-stack web application that I built to simplify and digitize the campus placement process. It connects students, companies, and Training & Placement Officers (TPO) in one platform — making the entire recruitment process faster, transparent, and easier to manage.
 
 ---
 
-## 🌟 Live Demo
+## Why I Built This
 
-🌐 **Frontend:** [careersync-delta-ecru.vercel.app](https://careersync-delta-ecru.vercel.app)
-⚙️ **Backend:** [careersync-backend-b96l.onrender.com](https://careersync-backend-b96l.onrender.com)
-
----
-
-## 👥 User Roles
-
-| Role | Description |
-|------|-------------|
-| 🎓 **Student** | Browse jobs, apply, track applications, chat with companies |
-| 🏢 **Company** | Post jobs, manage applicants, schedule interviews |
-| 🛡️ **Admin (TPO)** | Approve companies/jobs, send announcements, view reports |
+Campus placement in most colleges is still managed through spreadsheets, WhatsApp groups, and manual emails. Students miss deadlines, companies struggle to manage applicants, and TPOs spend hours on coordination. CareerSync solves all of this in one place.
 
 ---
 
-## ✨ Features
+## Live Demo
 
-### 🎓 Student Features
-- 📊 Personal dashboard with placement statistics
-- 💼 Browse and apply for jobs with advanced filters
-- ⭐ Save/bookmark interesting jobs
-- 📋 Track application status in real-time
-- 🗓 View upcoming interviews and drive calendar
-- 💬 Real-time chat with company HRs
-- 🔔 In-app + email notifications
-- 📄 Upload and manage resume
-- 🖼️ Profile photo upload
-- 📢 View announcements from TPO
+🌐 **Live Site:** [careersync-delta-ecru.vercel.app](https://careersync-delta-ecru.vercel.app)
 
-### 🏢 Company Features
-- 📝 Post job openings with eligibility criteria
-- 👥 View and manage applicants
-- 📅 Schedule interviews with email notifications
-- 💬 Real-time chat with students
-- 📊 Track hiring statistics
-
-### 🛡️ Admin (TPO) Features
-- ✅ Approve/reject company registrations
-- ✅ Approve/reject job postings
-- 📢 Send bulk announcements (email + in-app)
-- 📊 Advanced placement analytics with 6+ charts
-- 🗓 Drive calendar overview
-- 👨‍🎓 Manage all students and companies
-- 📈 Branch-wise placement reports
-
-### 🔧 Technical Features
-- 🔑 JWT Authentication with role-based access
-- 🔒 Forgot password with email reset link
-- 💬 Real-time chat with Socket.io
-- 📧 Beautiful HTML email notifications
-- 📱 Fully mobile responsive
-- 🔔 Real-time in-app notifications
-- 📅 Interactive drive calendar
-- 📊 Analytics dashboard with Recharts
+> **Note:** The backend is hosted on Render's free plan, so the first load might take 30-50 seconds to wake up. After that it works normally.
 
 ---
 
-## 🛠️ Tech Stack
+## Demo Credentials
 
-### Frontend
-| Technology | Purpose |
-|-----------|---------|
-| React 18 + Vite | Frontend framework |
-| Tailwind CSS | Styling |
-| React Router v6 | Navigation |
-| React Query | Data fetching & caching |
-| Socket.io Client | Real-time chat |
-| Recharts | Analytics charts |
-| React Big Calendar | Drive calendar |
-| Lucide React | Icons |
+You can use these accounts to test all features without registering:
 
-### Backend
-| Technology | Purpose |
-|-----------|---------|
-| Node.js + Express | Server framework |
-| MongoDB + Mongoose | Database |
-| JWT + bcryptjs | Authentication |
-| Socket.io | Real-time communication |
-| Nodemailer | Email notifications |
-| Multer | File uploads |
-| Cloudinary | Cloud file storage |
+### Admin Account
+
+Email:    admin@careersync.com
+Password: admin123
+
+> **Note:** Please do not change these passwords so others can also test the project.
 
 ---
 
-## 🚀 Getting Started
+## What It Can Do
 
-### Prerequisites
-- Node.js v18+
-- MongoDB Atlas account (free)
-- Gmail account (for email notifications)
+There are 3 types of users in CareerSync:
 
-### Installation
+### Students
+- Register and build their placement profile
+- Browse job openings and apply with one click
+- Track their application status in real time
+- Save jobs they are interested in
+- View upcoming placement drives on a calendar
+- Chat directly with company HRs
+- Get email and in-app notifications for every update
+- Upload resume and profile photo
 
-#### 1. Clone the repository
+### Companies
+- Register and post job openings with eligibility criteria
+- View and manage student applications
+- Schedule interviews and notify students automatically
+- Chat with students directly
+- Track their hiring statistics
+
+### Admin / TPO
+- Approve or reject company registrations and job postings
+- Send announcements to all students or companies
+- View detailed placement reports with charts
+- Monitor all drives on a calendar
+- Manage students and companies from one dashboard
+
+---
+
+## Tech Stack
+
+**Frontend**
+- React 18 with Vite
+- Tailwind CSS
+- React Router v6
+- React Query for data fetching
+- Socket.io for real-time chat
+- Recharts for analytics
+- React Big Calendar for drive schedule
+
+**Backend**
+- Node.js with Express
+- MongoDB with Mongoose
+- JWT for authentication
+- Socket.io for real-time communication
+- Nodemailer for emails
+- Multer for file uploads
+
+**Deployed on**
+- Frontend — Vercel
+- Backend — Render
+- Database — MongoDB Atlas
+
+---
+
+## Getting Started
+
+### Requirements
+- Node.js v18 or higher
+- MongoDB Atlas account
+- Gmail account for email notifications
+
+### Setup
+
 ```bash
+# Clone the repo
 git clone https://github.com/Mohammed-Omer-S/careersync.git
 cd careersync
-```
 
-#### 2. Install dependencies
-```bash
-# Install root dependencies
+# Install all dependencies
 npm install
-
-# Install server dependencies
 cd server && npm install
-
-# Install client dependencies
 cd ../client && npm install
 ```
 
-#### 3. Configure environment variables
-```bash
-cd server
-cp .env.example .env
-```
+Create a `.env` file inside the `server` folder:
 
-Fill in your `.env` file:
 ```env
 PORT=5000
 NODE_ENV=development
-MONGO_URI=your_mongodb_atlas_uri
+MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 JWT_EXPIRE=7d
-CLOUDINARY_CLOUD_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_cloudinary_key
-CLOUDINARY_API_SECRET=your_cloudinary_secret
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 EMAIL_USER=your_gmail@gmail.com
@@ -146,111 +122,62 @@ EMAIL_PASS=your_gmail_app_password
 CLIENT_URL=http://localhost:5173
 ```
 
-#### 4. Start the development server
+Start the project:
+
 ```bash
-# From root directory — starts both frontend and backend
+# From root folder — runs both frontend and backend
 npm run dev
 ```
 
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:5000
+- Frontend runs on: http://localhost:5173
+- Backend runs on: http://localhost:5000
 
 ---
 
-## 📡 API Endpoints
+## Creating Your Own Admin Account
 
-### Auth
-```
-POST   /api/auth/register
-POST   /api/auth/login
-GET    /api/auth/me
-POST   /api/auth/forgot-password
-PUT    /api/auth/reset-password/:token
-PUT    /api/auth/change-password
-```
+If you want to create a fresh admin account use Postman or Thunder Client:
 
-### Jobs
-```
-GET    /api/jobs              # Get all approved jobs
-POST   /api/jobs              # Post a job (company)
-GET    /api/jobs/:id          # Get job details
-PUT    /api/jobs/:id          # Update job (company)
-DELETE /api/jobs/:id          # Delete job (company)
-```
-
-### Applications
-```
-POST   /api/applications/:jobId     # Apply for job (student)
-GET    /api/applications/my         # My applications (student)
-GET    /api/applications/job/:jobId # Job applicants (company)
-PUT    /api/applications/:id/status # Update status (company)
-PUT    /api/applications/:id/withdraw # Withdraw (student)
-```
-
-### Admin
-```
-GET    /api/admin/stats
-GET    /api/admin/students
-GET    /api/admin/companies
-GET    /api/admin/reports
-PUT    /api/admin/companies/:id/approve
-PUT    /api/admin/jobs/:id/approve
-```
-
----
-
-## 📁 Project Structure
-```
-careersync/
-├── client/                    # React Frontend
-│   └── src/
-│       ├── components/        # Reusable components
-│       ├── pages/             # Page components
-│       │   ├── auth/          # Login, Register, ForgotPassword
-│       │   ├── student/       # Student pages
-│       │   ├── company/       # Company pages
-│       │   └── admin/         # Admin pages
-│       ├── context/           # AuthContext, SocketContext
-│       └── services/          # API service files
-│
-└── server/                    # Node.js Backend
-    ├── config/                # Database & Cloudinary config
-    ├── controllers/           # Business logic
-    ├── middleware/            # Auth, error handling
-    ├── models/                # Mongoose schemas
-    ├── routes/                # Express routes
-    └── utils/                 # Helper functions
-```
-
----
-
-## 🔐 Creating Admin Account
-
-Use Postman or Thunder Client:
-```http
-POST http://localhost:5000/api/auth/register
-Content-Type: application/json
-
+POST https://careersync-backend-b96l.onrender.com/api/auth/register
 {
-  "name": "Admin User",
-  "email": "admin@careersync.com",
-  "password": "admin123",
-  "role": "admin"
+"name": "Your Name",
+"email": "your_email@example.com",
+"password": "your_password",
+"role": "admin"
 }
-```
 
 ---
 
-## 👨‍💻 Author
+## Project Structure
+
+careersync/
+├── client/                 # React frontend
+│   └── src/
+│       ├── components/     # Navbar, Avatar, Loader etc.
+│       ├── context/        # Auth and Socket context
+│       ├── pages/          # All pages by role
+│       └── services/       # API calls
+│
+└── server/                 # Node.js backend
+├── config/             # DB and Cloudinary setup
+├── controllers/        # Route logic
+├── middleware/         # Auth and error handling
+├── models/             # Database schemas
+├── routes/             # API routes
+└── utils/              # Email, notifications etc.
+
+---
+
+## Author
 
 **Mohammed Omer**
-- GitHub: [@Mohammed-Omer-S](https://github.com/Mohammed-Omer-S)
+GitHub: [@Mohammed-Omer-S](https://github.com/Mohammed-Omer-S)
 
 ---
 
-## 📄 License
+## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source under the [MIT License](LICENSE).
 
 ---
 
