@@ -7,4 +7,5 @@ export const adminService = {
   getReports:     ()           => api.get("/admin/reports"),
   approveCompany: (id, status) => api.put(`/admin/companies/${id}/approve`, { isApproved: status }),
   approveJob:     (id, status) => api.put(`/admin/jobs/${id}/approve`,      { isApproved: status }),
+  deleteUser:     (id)         => api.delete(`/admin/users/${id}`),
 };

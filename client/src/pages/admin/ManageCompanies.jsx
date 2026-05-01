@@ -2,20 +2,28 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Navbar from "../../components/common/Navbar";
 import { adminService } from "../../services/adminService";
 import toast from "react-hot-toast";
-import { Building2, CheckCircle, XCircle } from "lucide-react";
+import { Building2, CheckCircle, XCircle, Trash2 } from "lucide-react";
 
 export default function ManageCompanies() {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryKey: ["adminCompanies"],
-    queryFn:  () => adminService.getCompanies().then(r => r.data.data),
+    queryFn: () => adminService.getCompanies().then(r => r.data.data),
   });
 
   const approveMutation = useMutation({
     mutationFn: ({ id, status }) => adminService.approveCompany(id, status),
     onSuccess: () => {
       toast.success("Company status updated!");
+      queryClient.invalidateQueries(["adminCompanies"]);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id) => adminService.deleteUser(id),
+    onSuccess: () => {
+      toast.success("Company deleted successfully!");
       queryClient.invalidateQueries(["adminCompanies"]);
     },
   });
@@ -50,11 +58,10 @@ export default function ManageCompanies() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <span className={`badge ${
-                      c.user?.isApproved
-                        ? "bg-green-100 text-green-700"
-                        : "bg-yellow-100 text-yellow-700"
-                    }`}>
+                    <span className={`badge ${c.user?.isApproved
+                      ? "bg-green-100 text-green-700"
+                      : "bg-yellow-100 text-yellow-700"
+                      }`}>
                       {c.user?.isApproved ? "Approved" : "Pending"}
                     </span>
 
@@ -71,6 +78,16 @@ export default function ManageCompanies() {
                         <XCircle size={15} /> Revoke
                       </button>
                     )}
+
+                    {/* Delete Button */}
+                    <button
+                      onClick={() => {
+                        if (window.confirm(`Delete ${c.companyName}? This cannot be undone!`))
+                          deleteMutation.mutate(c.user?._id);
+                      }}
+                      className="flex items-center gap-1 bg-red-50 hover:bg-red-100 text-red-600 font-medium px-3 py-1.5 rounded-lg text-sm transition-colors">
+                      <Trash2 size={15} /> Delete
+                    </button>
                   </div>
                 </div>
               </div>

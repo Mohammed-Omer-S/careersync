@@ -4,6 +4,8 @@ const templates = require("../utils/emailTemplates");
 const Student = require("../models/Student");
 const Company = require("../models/Company");
 const Job = require("../models/Job");
+const Interview     = require("../models/Interview");
+const Notification  = require("../models/Notification");
 const Application = require("../models/Application");
 const createNotification = require("../utils/createNotification");
 const { successResponse, errorResponse } = require("../utils/apiResponse");
@@ -123,6 +125,44 @@ exports.getAllStudents = async (req, res, next) => {
   }
 };
 
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Find the user first
+    const user = await User.findById(id);
+    if (!user) return errorResponse(res, 404, "User not found");
+
+    // Delete everything related to this user
+    if (user.role === "student") {
+      const student = await Student.findOne({ user: id });
+      if (student) {
+        await Application.deleteMany({ student: student._id });
+        await Interview.deleteMany({ student: student._id });
+        await Student.findOneAndDelete({ user: id });
+      }
+    }
+
+    if (user.role === "company") {
+      const company = await Company.findOne({ user: id });
+      if (company) {
+        await Job.deleteMany({ company: company._id });
+        await Company.findOneAndDelete({ user: id });
+      }
+    }
+
+    // Delete notifications and conversations
+    await Notification.deleteMany({ recipient: id });
+
+    // Delete the user
+    await User.findByIdAndDelete(id);
+
+    successResponse(res, 200, "User deleted successfully");
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.getAllCompanies = async (req, res, next) => {
   try {
     const companies = await Company.find().populate("user", "name email isApproved");
@@ -147,31 +187,35 @@ exports.getPlacementReport = async (req, res, next) => {
   try {
     // Branch-wise stats
     const branchWise = await Student.aggregate([
-      { $group: {
-        _id:    "$branch",
-        total:  { $sum: 1 },
-        placed: { $sum: { $cond: [{ $ne: ["$placementStatus", "not_placed"] }, 1, 0] } },
-        avgCTC: { $avg: "$ctc" },
-      }},
+      {
+        $group: {
+          _id: "$branch",
+          total: { $sum: 1 },
+          placed: { $sum: { $cond: [{ $ne: ["$placementStatus", "not_placed"] }, 1, 0] } },
+          avgCTC: { $avg: "$ctc" },
+        }
+      },
       { $sort: { total: -1 } },
     ]);
 
     // Top CTC students
     const topCTC = await Student.find({ placementStatus: { $ne: "not_placed" } })
-      .populate("user",         "name")
-      .populate("placedCompany","companyName")
+      .populate("user", "name")
+      .populate("placedCompany", "companyName")
       .sort("-ctc")
       .limit(10);
 
     // CTC distribution
     const ctcDistribution = await Student.aggregate([
       { $match: { placementStatus: { $ne: "not_placed" }, ctc: { $gt: 0 } } },
-      { $bucket: {
-        groupBy:    "$ctc",
-        boundaries: [0, 5, 10, 15, 20, 30, 100],
-        default:    "30+",
-        output: { count: { $sum: 1 } },
-      }},
+      {
+        $bucket: {
+          groupBy: "$ctc",
+          boundaries: [0, 5, 10, 15, 20, 30, 100],
+          default: "30+",
+          output: { count: { $sum: 1 } },
+        }
+      },
     ]);
 
     // Company-wise hiring
@@ -187,14 +231,16 @@ exports.getPlacementReport = async (req, res, next) => {
 
     // Month-wise applications trend
     const monthWise = await Application.aggregate([
-      { $group: {
-        _id: {
-          month: { $month:  "$createdAt" },
-          year:  { $year:   "$createdAt" },
-        },
-        applications: { $sum: 1 },
-        selected:     { $sum: { $cond: [{ $eq: ["$status", "selected"] }, 1, 0] } },
-      }},
+      {
+        $group: {
+          _id: {
+            month: { $month: "$createdAt" },
+            year: { $year: "$createdAt" },
+          },
+          applications: { $sum: 1 },
+          selected: { $sum: { $cond: [{ $eq: ["$status", "selected"] }, 1, 0] } },
+        }
+      },
       { $sort: { "_id.year": 1, "_id.month": 1 } },
       { $limit: 12 },
     ]);
@@ -207,9 +253,9 @@ exports.getPlacementReport = async (req, res, next) => {
     ]);
 
     // Overall stats
-    const totalStudents  = await Student.countDocuments();
+    const totalStudents = await Student.countDocuments();
     const placedStudents = await Student.countDocuments({ placementStatus: { $ne: "not_placed" } });
-    const avgCTCResult   = await Student.aggregate([
+    const avgCTCResult = await Student.aggregate([
       { $match: { ctc: { $gt: 0 } } },
       { $group: { _id: null, avgCTC: { $avg: "$ctc" }, maxCTC: { $max: "$ctc" } } },
     ]);
@@ -225,8 +271,8 @@ exports.getPlacementReport = async (req, res, next) => {
         totalStudents,
         placedStudents,
         placementRate: totalStudents ? ((placedStudents / totalStudents) * 100).toFixed(1) : 0,
-        avgCTC:        avgCTCResult[0]?.avgCTC?.toFixed(2) || 0,
-        maxCTC:        avgCTCResult[0]?.maxCTC || 0,
+        avgCTC: avgCTCResult[0]?.avgCTC?.toFixed(2) || 0,
+        maxCTC: avgCTCResult[0]?.maxCTC || 0,
       },
     });
   } catch (err) {

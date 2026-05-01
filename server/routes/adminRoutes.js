@@ -2,7 +2,7 @@ const express = require("express");
 const router  = express.Router();
 const {
   getDashboardStats, approveCompany, approveJob,
-  getAllStudents, getAllCompanies, getPlacementReport, getAllJobs,
+  getAllStudents, getAllCompanies, getPlacementReport, getAllJobs, deleteUser,
 } = require("../controllers/adminController");
 const { protect, authorize } = require("../middleware/authMiddleware");
 
@@ -15,5 +15,6 @@ router.get("/companies",             getAllCompanies);
 router.get("/reports",               getPlacementReport);
 router.put("/companies/:id/approve", approveCompany);
 router.put("/jobs/:id/approve",      approveJob);
+router.delete("/users/:id", deleteUser);
 
 module.exports = router;
