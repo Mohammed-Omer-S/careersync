@@ -12,7 +12,8 @@
 
 ## 🌟 Live Demo
 
-> 🚀 Coming soon — will be deployed on Vercel + Render
+🌐 **Frontend:** [careersync-delta-ecru.vercel.app](https://careersync-delta-ecru.vercel.app)
+⚙️ **Backend:** [careersync-backend-b96l.onrender.com](https://careersync-backend-b96l.onrender.com)
 
 ---
 
