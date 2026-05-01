@@ -5,13 +5,13 @@ import { useAuth } from "./AuthContext";
 const SocketContext = createContext(null);
 
 export const SocketProvider = ({ children }) => {
-  const { user }              = useAuth();
-  const [socket, setSocket]   = useState(null);
+  const { user } = useAuth();
+  const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
     if (user) {
-      const newSocket = io("http://localhost:5000", {
+      const newSocket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:5000", {
         transports: ["websocket"],
       });
 
