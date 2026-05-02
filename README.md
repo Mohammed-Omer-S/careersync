@@ -150,21 +150,22 @@ POST https://careersync-backend-b96l.onrender.com/api/auth/register
 
 ## Project Structure
 
-careersync/
-├── client/                 # React frontend
-│   └── src/
-│       ├── components/     # Navbar, Avatar, Loader etc.
-│       ├── context/        # Auth and Socket context
-│       ├── pages/          # All pages by role
-│       └── services/       # API calls
-│
-└── server/                 # Node.js backend
-├── config/             # DB and Cloudinary setup
-├── controllers/        # Route logic
-├── middleware/         # Auth and error handling
-├── models/             # Database schemas
-├── routes/             # API routes
-└── utils/              # Email, notifications etc.
+**Client (React Frontend)**
+- `src/components` — Navbar, Avatar, Loader and other reusable components
+- `src/context` — Auth context and Socket context
+- `src/pages/auth` — Login, Register, Forgot Password
+- `src/pages/student` — Dashboard, Jobs, Applications, Profile
+- `src/pages/company` — Dashboard, Post Job, Applicants
+- `src/pages/admin` — Dashboard, Reports, Manage Users
+- `src/services` — API call functions
+
+**Server (Node.js Backend)**
+- `config` — Database and Cloudinary configuration
+- `controllers` — Business logic for all routes
+- `middleware` — Authentication and error handling
+- `models` — MongoDB schemas
+- `routes` — Express API routes
+- `utils` — Email, notifications and helper functions
 
 ---
 
