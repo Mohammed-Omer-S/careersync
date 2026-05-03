@@ -16,21 +16,6 @@ Campus placement in most colleges is still managed through spreadsheets, WhatsAp
 
 > **Note:** The backend is hosted on Render's free plan, so the first load might take 30-50 seconds to wake up. After that it works normally.
 
----
-
-## Demo Credentials
-
-You can use these accounts to test all features without registering:
-
-### Admin Account
-
-Email:    admin@careersync.com
-Password: admin123
-
-> **Note:** Please do not change these passwords so others can also test the project.
-
----
-
 ## What It Can Do
 
 There are 3 types of users in CareerSync:
